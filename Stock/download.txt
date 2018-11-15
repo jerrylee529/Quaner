@@ -1,0 +1,31 @@
+#coding:utf-8
+
+__author__ = 'Administrator'
+
+import tushare as ts
+import sys
+
+if len(sys.argv) < 2:
+    print "Usage: downloaddata4lstm [code]"
+    sys.exit(2)
+
+# 下载数据
+df = ts.get_h_data(sys.argv[1], start='', end='')
+
+# 改为以date为索引
+df.set_index('date', inplace=True)
+
+# 删除code列
+df.pop('code')
+
+# 计算收盘价的5,10,20,60移动平均线
+df['ma5'] = df['close'].rolling(window=5).mean()
+df['ma10'] = df['close'].rolling(window=10).mean()
+df['ma20'] = df['close'].rolling(window=20).mean()
+df['ma60'] = df['close'].rolling(window=60).mean()
+
+# 计算成交量的5,10,20,60移动平均线
+df['va5'] = df['volume'].rolling(window=5).mean()
+df['va10'] = df['volume'].rolling(window=10).mean()
+df['va20'] = df['volume'].rolling(window=20).mean()
+df['va60'] = df['volume'].rolling(window=60).mean()

@@ -1,0 +1,9 @@
+history_data_path=C:\Stock\data
+instrument_file_path=C:\Stock\
+long_term=60
+ma_lines=5,10,20
+safe_term=250
+save_file_path=C:\Stock\product\
+short_term=60
+stop_loss_rate=5
+threshold=20
